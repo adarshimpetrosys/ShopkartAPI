@@ -1,15 +1,15 @@
-const Slider = require("../models/Slider");
+const Slider     = require("../models/Slider");
 
 const sliderRepo = {
+
   async add(body, filePath) {
     try {
-      console.log("status")
-
+  
       const sliderModel = new Slider({
-        slider_title: body.slider_title,
-        slider_desc: body.slider_desc,
-        slider_button: body.slider_button,
-        slider_image: filePath,
+        slider_title  : body.slider_title,
+        slider_desc   : body.slider_desc,
+        slider_button : body.slider_button,
+        slider_image  : filePath,
       });
 
       return (document = await sliderModel.save());
@@ -44,10 +44,10 @@ const sliderRepo = {
       return (updateData = await Slider.findByIdAndUpdate(
         { _id: body.id },
         {
-          slider_title: body.slider_title,
-          slider_desc: body.slider_desc,
-          slider_button: body.slider_button,
-          slider_image: filePath,
+          slider_title  : body.slider_title,
+          slider_desc   : body.slider_desc,
+          slider_button : body.slider_button,
+          slider_image  : filePath,
         },
         {
           new: true,
@@ -57,6 +57,16 @@ const sliderRepo = {
       console.log(error);
     }
   },
+  
+  async destroy(id) {
+    try {
+      return await Slider.findByIdAndDelete({ _id: id });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+
 };
 
 module.exports = sliderRepo;

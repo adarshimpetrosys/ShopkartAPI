@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose     = require("mongoose");
 
 const sliderSchema = mongoose.Schema(
   {
@@ -22,6 +22,6 @@ const sliderSchema = mongoose.Schema(
   { timestampes: true }
 );
 
-const Slider = mongoose.model("Slider", sliderSchema);
+const Slider   = mongoose.model("Slider", sliderSchema);
 
 module.exports = Slider;

@@ -3,7 +3,8 @@ dotenv.config();
 
 // ------------------------------
 const mongoose = require("mongoose");
-// Db conn
+
+// Db connection..
 
 mongoose
   .connect(`mongodb://localhost:27017/shopkartdb`)

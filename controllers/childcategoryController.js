@@ -1,9 +1,9 @@
-const multer = require("multer");
-const path = require("path");
+const multer             = require("multer");
+const path               = require("path");
 const ChildcategoryModel = require("../models/ChildcategoryModel");
-const Joi = require("joi");
-const fs = require("fs");
-const childcategoryRepo = require("../databaseRepos/childcategoryRepo");
+const Joi                = require("joi");
+const fs                 = require("fs");
+const childcategoryRepo  = require("../databaseRepos/childcategoryRepo");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
@@ -64,6 +64,7 @@ const childcategoryController = {
       );
 
       if (childcategoryData) {
+        
         res.status(201).json({
           message: "childcategory created successfully",
           childcategoryData,

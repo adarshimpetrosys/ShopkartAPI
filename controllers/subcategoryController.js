@@ -1,8 +1,8 @@
-const multer = require("multer");
-const path = require("path");
+const multer          = require("multer");
+const path            = require("path");
 const subcategoryRepo = require("../databaseRepos/subcategoryRepo");
-const Joi = require("joi");
-const fs = require("fs");
+const Joi             = require("joi");
+const fs              = require("fs");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),

@@ -1,17 +1,15 @@
-const multer       = require("multer");
-const path         = require("path");
-const Slider       = require("../models/Slider");
-const sliderRepo   = require("../databaseRepos/sliderRepo");
-const Joi          = require("joi");
-const fs           = require("fs")
-const storage      = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
+const productMediaRepo = require("../databaseRepos/productMediaRepo");
+const multer           = require("multer");
+const path             = require("path");
+const Joi              = require("joi");
+const fs               = require("fs");
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) => {
     const uniqueName = `${Date.now()}-${Math.round(
       Math.random() * 1e9
     )}${path.extname(file.originalname)}`;
-
     cb(null, uniqueName);
   },
 });
@@ -21,8 +19,10 @@ const handleMultipartData = multer({
   limits: { fileSize: 1000000 * 5 },
 }).single("image"); //5 MB
 
-const sliderController = {
-  async store(req, res) {
+// -------------------------------------------------------------------
+
+const productMediaController = {
+  async add(req, res) {
     handleMultipartData(req, res, async (err) => {
       if (err) {
         res.status(500).json({
@@ -33,13 +33,12 @@ const sliderController = {
         });
       }
 
-      sliderSchema = Joi.object({
-        slider_title: Joi.string().required(),
-        slider_desc: Joi.string().required(),
-        slider_button: Joi.string().required(),
+      productmediaSchema = Joi.object({
+        product_id: Joi.string().required(),
+        image_desc: Joi.string().required(),
       });
 
-      const { error } = sliderSchema.validate(req.body);
+      const { error } = productmediaSchema.validate(req.body);
 
       if (error) {
         fs.unlink(`${appRoot}/${filePath}`, (err) => {
@@ -53,35 +52,33 @@ const sliderController = {
         // rootfolder/uploads/filename.png
         return res.status(400).json({ error: error.details[0].message });
       }
-
       const filePath = req.file.path;
 
-      const slider   = await sliderRepo.add(req.body, filePath);
+      const document = await productMediaRepo.add(req.body, filePath);
 
-      if (slider) {
+      if (document) {
         res
           .status(201)
-          .json({ message: "slider created successfully", slider });
+          .json({ message: "product media created successfully", document });
       } else {
         res.status(400).json({ msg: "Something went wrong", success: false });
       }
     });
   },
-
   async index(req, res) {
-    const data = await sliderRepo.get();
+    const data = await productMediaRepo.index();
 
-    if (data) {
-      res.status(200).json({ data: data, success: true, status: 200 });
-    } else {
+    if (data.length <= 0) {
       res.status(404).json({ msg: "No Data found", success: true });
+    } else {
+      res.status(200).json({ data: data, success: true, status: 200 });
     }
   },
 
   async edit(req, res) {
     const id = req.params.id;
-    const data = await sliderRepo.edit(id);
-
+    const data = await productMediaRepo.edit(id);
+    // console.log(categoryData.length)
     if (data.length <= 0) {
       res
         .status(404)
@@ -90,8 +87,7 @@ const sliderController = {
       res.status(200).json({ data: data, success: true, status: 200 });
     }
   },
-
-  async update(req,res) {
+  async update(req, res) {
     handleMultipartData(req, res, async (err) => {
       if (err) {
         res.status(500).json({
@@ -104,14 +100,13 @@ const sliderController = {
 
       const filePath = req.file.path;
 
-      sliderSchema = Joi.object({
+      productSchema = Joi.object({
         id: Joi.string().required(),
-        slider_title: Joi.string().required(),
-        slider_desc: Joi.string().required(),
-        slider_button: Joi.string().required(),
+        product_id: Joi.string().required(),
+        image_desc: Joi.string().required(),
       });
 
-      const { error } = sliderSchema.validate(req.body);
+      const { error } = productSchema.validate(req.body);
 
       if (error) {
         fs.unlink(`${appRoot}/${filePath}`, (err) => {
@@ -126,12 +121,12 @@ const sliderController = {
         return res.status(400).json({ error: error.details[0].message });
       }
 
-      const updateData = await sliderRepo.update(req.body, filePath);
+      const updateData = await productMediaRepo.update(req.body, filePath);
       //   res.json(updateData);
 
       if (updateData !== null) {
         res.status(200).json({
-          msg: "Slider updated Succesfully",
+          msg: "product media updated Succesfully",
           success: true,
           updateData,
         });
@@ -141,21 +136,17 @@ const sliderController = {
     });
   },
 
+  async delete(req, res) {
+  const deleteData = await productMediaRepo.delete(req.params.id);
 
-  async destroy(req,res){
-    const id = req.params.id;
-   //  console.log(id)
-    const deletedDoc = await sliderRepo.destroy(id);
-
-    if (deletedDoc === null) {
-     res.status(404).json({ msg: "No Data Found", success: false });
-   } else {
-     res
-       .status(202)
-       .json({ msg: "Data Deleted Succesfully", success: true });
-   }
-
- }
+    if (deleteData === null) {
+      res.status(404).json({ msg: "No Data Found", success: false });
+    } else {
+      res
+        .status(202)
+        .json({ msg: "Product-Media Deleted Succesfully", success: true });
+    }
+  },
 };
 
-module.exports = sliderController;
+module.exports = productMediaController;

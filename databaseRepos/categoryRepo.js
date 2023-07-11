@@ -13,7 +13,7 @@ const categoryRepo = {
 
       return (categoryData = await category.save());
     } catch (error) {
-      console.log(error);
+      return error;
     }
   },
 
@@ -23,7 +23,7 @@ const categoryRepo = {
         isEnabled: true,
       }));
     } catch (error) {
-      console.log(error);
+      return error;
     }
   },
 
@@ -34,28 +34,28 @@ const categoryRepo = {
         isEnabled: true,
       }));
     } catch (error) {
-      console.log(error);
+      return error;
     }
   },
-  async updateCategory(data,filePath) {
+  async updateCategory(data, filePath) {
     try {
-        // console.log(data)
-        // console.log(filePath)
+      // console.log(data)
+      // console.log(filePath)
 
-      return updateData = await CategoryModel.findByIdAndUpdate(
+      return (updateData = await CategoryModel.findByIdAndUpdate(
         { _id: data.id },
         {
           name: data.name,
           desc: data.desc,
           image: filePath,
-          isEnabled:data.status,
+          isEnabled: data.status,
         },
         {
           new: true,
         }
-      );
+      ));
     } catch (error) {
-      console.log(error);
+      return error;
     }
   },
 };

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose            = require("mongoose");
 const childcategorySchema = mongoose.Schema({
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,8 +29,8 @@ const childcategorySchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-});
+}, { timestamps: true });
 
 const ChildcategoryModel = mongoose.model("Childcategory", childcategorySchema);
 
-module.exports = ChildcategoryModel;
+module.exports           = ChildcategoryModel;

@@ -1,7 +1,7 @@
-const multer = require("multer");
-const path = require("path");
-const Joi = require("joi");
-const fs = require("fs");
+const multer       = require("multer");
+const path         = require("path");
+const Joi          = require("joi");
+const fs           = require("fs");
 const categoryRepo = require("../databaseRepos/categoryRepo");
 
 const storage = multer.diskStorage({
@@ -70,12 +70,12 @@ const categoryController = {
   },
 
   async index(req, res) {
-    const catData = await categoryRepo.getCategory();
+    const data = await categoryRepo.getCategory();
 
-    if (catData) {
-      res.status(200).json({ data: catData, success: true, status: 200 });
-    } else {
+    if (data.length <= 0) {
       res.status(404).json({ msg: "No Data found", success: true });
+    } else {
+      res.status(200).json({ data: data, success: true, status: 200 });
     }
   },
 
