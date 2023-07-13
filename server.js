@@ -9,13 +9,14 @@ const subcategoryRouter         = require('./routes/subcategoryRoutes');
 const childcategoryRouter       = require('./routes/childcategoryRoutes');
 const productRouter             = require('./routes/productRoutes');
 
+const cors = require("cors")
 
 global.appRoot = path.resolve(__dirname);
 
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-
+app.use(cors());
 // Routers 
 app.use(sliderRouter);
 app.use(categoryRouter);

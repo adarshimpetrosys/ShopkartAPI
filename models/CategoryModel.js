@@ -1,4 +1,4 @@
-const mongoose       = require("mongoose");
+const mongoose = require("mongoose");
 
 const CategorySchema = mongoose.Schema(
   {
@@ -16,6 +16,15 @@ const CategorySchema = mongoose.Schema(
       // required: true,
     },
 
+    subcategory: [
+      {
+        subcategory: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Subcategory",
+        },
+      },
+    ],
+
     isEnabled: {
       type: Boolean,
       default: false,
@@ -26,4 +35,4 @@ const CategorySchema = mongoose.Schema(
 
 const CategoryModel = mongoose.model("Category", CategorySchema);
 
-module.exports      = CategoryModel;
+module.exports = CategoryModel;
