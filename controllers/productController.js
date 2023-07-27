@@ -25,6 +25,7 @@ const productController = {
   async add(req, res) {
     handleMultipartData(req, res, async (err) => {
       const filePath = req.file.path;
+      console.log(req.file)
 
       if (err) {
         res.status(500).json({
@@ -61,6 +62,17 @@ const productController = {
       res.status(200).json(getData);
     } else {
       res.status(404).json({ msg: "No Data Found", success: false });
+    }
+  },
+
+  async getprobycatid (req,res){
+    // console.log(req.params.id)
+    const data = await ProductRepo.getprobycatid(req.params.id);
+
+    if (data.length <= 0) {
+      res.status(200).json({ data: null, success: true, status: 200 });
+    } else {
+      res.status(200).json({ data: data, success: true, status: 200 });
     }
   },
 

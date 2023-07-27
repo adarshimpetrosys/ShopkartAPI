@@ -9,7 +9,8 @@ const subcategoryRouter         = require('./routes/subcategoryRoutes');
 const childcategoryRouter       = require('./routes/childcategoryRoutes');
 const productRouter             = require('./routes/productRoutes');
 
-const cors = require("cors")
+const cors = require("cors");
+const userRouter = require('./routes/userRoutes');
 
 global.appRoot = path.resolve(__dirname);
 
@@ -23,11 +24,12 @@ app.use(categoryRouter);
 app.use(subcategoryRouter);
 app.use(childcategoryRouter);
 app.use(productRouter);
+app.use(userRouter);
 
 
 
 
 // server 
-app.listen(port,"192.168.29.80", () => {
+app.listen(port, () => {
   console.log(`app listening on port ${port}`)
 })

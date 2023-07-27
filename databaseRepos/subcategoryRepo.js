@@ -60,7 +60,7 @@ const subcategoryRepo = {
       //   console.log(data);
       //   console.log(filePath);
 
-      return (updateData = await SubcategoryModel.findByIdAndUpdate(
+      const updateData = await SubcategoryModel.findByIdAndUpdate(
         { _id: data.id },
         {
           category_id: data.category_id,
@@ -72,7 +72,21 @@ const subcategoryRepo = {
         {
           new: true,
         }
-      ));
+      );
+
+      const updateSub = await CategoryModel.findByIdAndUpdate(
+        { _id: updateData.category_id },
+        {
+          $push: {
+            subcategory: {
+              subcategory: updateData._id,
+            },
+          },
+        },
+        { new: true, useFindAndModify: false }
+      );
+
+      return updateData;
     } catch (error) {
       console.log(error);
     }

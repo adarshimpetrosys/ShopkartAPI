@@ -10,6 +10,7 @@ const productRouter            = express.Router();
 productRouter.post("/api/products",           productController.add);
 productRouter.get("/api/products/",           productController.index);
 productRouter.get("/api/products/:id",        productController.edit);
+productRouter.get("/api/getprobycatid/:id",        productController.getprobycatid);
 productRouter.patch("/api/products/",         productController.update);
 productRouter.delete("/api/products/:id",     productController.delete);
 

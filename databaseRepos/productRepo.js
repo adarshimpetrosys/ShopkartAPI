@@ -26,10 +26,16 @@ const ProductRepo  = {
   },
   async index() {
     try {
-      return (getData = await ProductModel.find().populate(
-        "category_id",
-        "name"
-      ));
+      return (getData = await ProductModel.find())
+    } catch (error) {
+      return error;
+      console.log(error)
+    }
+  },
+
+  async getprobycatid(catId){
+    try {
+      return (getData = await ProductModel.find({category_id:catId}))
     } catch (error) {
       return error;
     }

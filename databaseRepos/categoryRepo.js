@@ -19,9 +19,9 @@ const categoryRepo = {
 
   async getCategory() {
     try {
-      return (catData = await CategoryModel.find({
+      return catData = await CategoryModel.find({
         isEnabled: true,
-      }));
+      }).populate('subcategory.subcategory',"name");
     } catch (error) {
       return error;
     }
