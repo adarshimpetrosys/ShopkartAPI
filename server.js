@@ -25,6 +25,9 @@ app.use(subcategoryRouter);
 app.use(childcategoryRouter);
 app.use(productRouter);
 app.use(userRouter);
+app.get("/",(req,res)=>{
+  res.send("hello world")
+})
 
 
 
