@@ -21,6 +21,7 @@ const productStockRepo = {
     }
   },
   async index() {
+    
     try {
       return (data = await ProductStock.find({
         isEnabled: true,

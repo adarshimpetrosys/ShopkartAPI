@@ -26,7 +26,7 @@ app.use(childcategoryRouter);
 app.use(productRouter);
 app.use(userRouter);
 app.get("/",(req,res)=>{
-  res.send("hello  AWS")
+  res.send("Hello  Adarsh  !! ")
 })
 
 
