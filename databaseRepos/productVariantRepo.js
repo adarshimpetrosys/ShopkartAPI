@@ -1,4 +1,4 @@
-const ProductVariant     = require("../models/productVariant");
+const ProductVariant     = require("../models/ProductVariant");
 
 const productVariantRepo = {
   async add(bodyData) {

@@ -6,11 +6,17 @@ const mongoose = require("mongoose");
 
 // Db connection..
 
-mongoose
-  .connect(`mongodb://localhost:27017/shopkartdb`)
-  .then(() => {
-    console.log("DB Connected Successfully");
+
+
+  mongoose.connect("mongodb+srv://adarshrajimpetrosys:EL9Afs7YSaN5pzwR@cluster0.tfuqgvc.mongodb.net/?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: false,
   })
-  .catch((error) => {
-    console.log(error);
+  .then(() => {
+    console.log("DB Connected  Successful");
+  })
+  .catch((e) => {
+    console.log(e);
   });
+
+
